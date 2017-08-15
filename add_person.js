@@ -4,6 +4,7 @@ const knex = require('knex')({
   connection: settings,
   searchPath: 'knex,public'
 });
+
 const moment = require("moment")
 const args = process.argv.slice(2);
 
