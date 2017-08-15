@@ -5,13 +5,15 @@ const knex = require('knex')({
   searchPath: 'knex,public'
 });
 
+const moment = require("moment")
+
 
 const args = process.argv.slice(2);
 
 const newPerson = {
   first_name: args[0],
   last_name: args[1],
-  birthdate: args[2]
+  birthdate: moment(args[2]).format("YYYY-MM-DD")
 }
 
 
