@@ -4,10 +4,7 @@ const knex = require('knex')({
   connection: settings,
   searchPath: 'knex,public'
 });
-
 const moment = require("moment")
-
-
 const args = process.argv.slice(2);
 
 const newPerson = {
@@ -20,7 +17,7 @@ const newPerson = {
 const addFamousPeople = (data) => {
  knex('famous_people')
     .insert(data)
-    .then( (results) => {
+    .then((results) => {
       console.log("Added new user");
     })
     .catch( (err) => {
