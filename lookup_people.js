@@ -12,18 +12,24 @@ const client = new pg.Client({
   ssl      : settings.ssl
 });
 
+ const query = `
+  SELECT first_name, last_name, birthdate
+  FROM famous_people
+  WHERE (first_name = $1 OR last_name = $1)`
 
 client.connect((err) => {
   if (err) {
-    return console.error("Connection Error", err);
+    console.error('Cannot connect', err)
+    process.exit(1)
   }
-  client.query('SELECT first_name, last_name, birthdate FROM famous_people WHERE (first_name = $1::varchar OR last_name = $1::varchar)', [args], (err, res) => {
+
+  client.query(query, [args], (err, res) => {
     if (err) {
-      return console.error("error running query", err);
+      console.error('Error running query', err);
     }
-
-
-    console.log(`- 1: ${res.rows[0].first_name} ${res.rows[0].last_name}, born ${moment(res.rows[0].birthdate).format("YYYY-MM-D")}`);
+    console.log('Searching...')
+    console.log('Found one person by the name ' + args)
+    console.log(`- 1: ${res.rows[0].first_name} ${res.rows[0].last_name}, born ${moment(res.rows[0].birthdate).format("YYYY-MM-DD")}`);
     client.end();
 
   });
